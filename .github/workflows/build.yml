@@ -68,7 +68,7 @@ jobs:
         run: |
           cd ./output/dat || exit 1
           go install -v github.com/metacubex/geo/cmd/geo@latest
-          $(go env GOPATH)/bin/geo convert -i v2ray -o sing -f v2ray-country-only-cn-private.dat sing-country-only-cn-private.dat
+          $(go env GOPATH)/bin/geo convert ip -i v2ray -o sing -f v2ray-country-only-cn-private.dat sing-country-only-cn-private.dat
           
 
       - name: Move files to publish directory
