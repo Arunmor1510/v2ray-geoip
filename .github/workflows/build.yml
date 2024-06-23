@@ -51,7 +51,9 @@ jobs:
           go install -v github.com/zhanhb/cidr-merger@latest
           for name in `find . -type f -name "*.txt"`;do
             newname=`echo -n "${name}" | sed -e 's/ //g'`
-            mv "${name}" "$newname"
+            if [[ "$name" != "$newname" ]];then
+              mv "${name}" "$newname"
+            fi
             $(go env GOPATH)/bin/cidr-merger -o ../postmerge/${newname} "${name}"
           done
 
