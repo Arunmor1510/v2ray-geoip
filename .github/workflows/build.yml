@@ -54,7 +54,7 @@ jobs:
             if [[ "$name" != "$newname" ]];then
               mv "${name}" "$newname"
             fi
-            $(go env GOPATH)/bin/cidr-merger -o ../postmerge/${newname} "${name}"
+            $(go env GOPATH)/bin/cidr-merger -o ../postmerge/${newname} "${newname}"
           done
 
       - name: Build geoip files
