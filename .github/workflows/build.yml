@@ -24,10 +24,15 @@ jobs:
           echo "RELEASE_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         shell: bash
 
+      - name: mkdir
+        run: |
+          mkdir premerge
+          mkdir postmerge
+
       - name: Fetch lists from ripe.net
         run: |
           chmod +x asn.sh
-          ./asn.sh
+        #  ./asn.sh
 
       - name: Append more CIDRs
         run: |
@@ -35,11 +40,6 @@ jobs:
           curl -sSL https://www.gstatic.com/ipranges/cloud.json | jq --raw-output '.prefixes[].ipv4Prefix,.prefixes[].ipv6Prefix | select(. != null)' >> premerge/google.txt
           curl -sSL https://api.fastly.com/public-ip-list | jq --raw-output '.addresses[],.ipv6_addresses[]' >> premerge/fastly.txt
           curl -sSL https://ip-ranges.amazonaws.com/ip-ranges.json | jq --raw-output '.prefixes[],.ipv6_prefixes[] | select(.service == "CLOUDFRONT") | .ip_prefix,.ipv6_prefix' | grep "/" >> premerge/cloudfront.txt
-      
-      - name: mkdir
-        run: |
-          mkdir premerge
-          mkdir postmerge
 
       - name: Build geoip files
         run: |
