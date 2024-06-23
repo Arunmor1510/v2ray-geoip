@@ -49,12 +49,14 @@ jobs:
         run: |
           cd ./premerge || exit 1
           go install -v github.com/zhanhb/cidr-merger@latest
-          for name in `find . -type f -name "*.txt"`;do
+
+          find . -type f -name "*.txt" | while read name;do
+            echo "merge ${name}"
             newname=`echo -n "${name}" | sed -e 's/ //g'`
             if [[ "$name" != "$newname" ]];then
               mv "${name}" "${newname}"
             fi
-            echo "merge ${newname}"
+            
             $(go env GOPATH)/bin/cidr-merger -o ../postmerge/${newname} "${newname}"
           done
 
