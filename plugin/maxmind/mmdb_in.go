@@ -188,6 +188,9 @@ func (g *maxmindMMDBIn) generateEntries(entries map[string]*lib.Entry) error {
 		Country struct {
 			IsoCode string `maxminddb:"iso_code"`
 		} `maxminddb:"country"`
+		Continent struct {
+			Code string `maxminddb:"code"`
+		} `maxminddb:"continent"`
 	}{}
 
 	networks := db.Networks(maxminddb.SkipAliasedNetworks)
@@ -195,6 +198,38 @@ func (g *maxmindMMDBIn) generateEntries(entries map[string]*lib.Entry) error {
 		subnet, err := networks.Network(&record)
 		if err != nil {
 			continue
+		}
+
+		var entryContinent *lib.Entry
+		nameContinent := strings.ToUpper(record.Continent.Code)
+		var doContinent bool = false
+		if nameContinent == "EU" {
+			nameContinent = "EUROPE"
+			doContinent = true
+		}
+		if nameContinent == "NA" {
+			nameContinent = "NORTH AMERICA"
+			doContinent = true
+		}
+		if doContinent {
+			if theEntry, found := entries[nameContinent]; found {
+				entryContinent = theEntry
+			} else {
+				entryContinent = lib.NewEntry(nameContinent)
+			}
+
+			switch g.Action {
+			case lib.ActionAdd:
+				if err := entryContinent.AddPrefix(subnet); err != nil {
+					return err
+				}
+			case lib.ActionRemove:
+				if err := entryContinent.RemovePrefix(subnet.String()); err != nil {
+					return err
+				}
+			}
+
+			entries[nameContinent] = entryContinent
 		}
 
 		var entry *lib.Entry
@@ -217,6 +252,7 @@ func (g *maxmindMMDBIn) generateEntries(entries map[string]*lib.Entry) error {
 		}
 
 		entries[name] = entry
+
 	}
 
 	if networks.Err() != nil {
