@@ -1,10 +1,10 @@
 {
   "input": [
     {
-      "type": "ipinfoMMDB",
+      "type": "maxmindMMDB",
       "action": "add",
       "args": {
-        "uri": "https://github.com/cnartlu/geoip2/releases/latest/download/country.mmdb",
+        "uri": "https://github.com/P3TERX/GeoLite.mmdb/releases/latest/download/GeoLite2-Country.mmdb",
         "wantedList": [
           "europe",
           "North America",
