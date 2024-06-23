@@ -49,7 +49,7 @@ jobs:
         run: |
           cd ./premerge || exit 1
           go install -v github.com/zhanhb/cidr-merger@latest
-          for name in `find . -type f -name "*.txt"`  
+          for name in `find . -type f -name "*.txt"`;do
             newname=`echo -n "${name}" | sed -e 's/ //g'`
             mv "${name}" "$newname"
             $(go env GOPATH)/bin/cidr-merger -o ../postmerge/${newname} "${name}"
