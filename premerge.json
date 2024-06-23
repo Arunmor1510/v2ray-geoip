@@ -1,0 +1,28 @@
+{
+  "input": [
+    {
+      "type": "ipinfoMMDB",
+      "action": "add",
+      "args": {
+        "uri": "https://github.com/cnartlu/geoip2/releases/latest/download/country.mmdb",
+        "wantedList": [
+          "europe",
+          "North America",
+          "hk",
+          "sg",
+          "tw",
+          "jp"
+        ]
+      }
+    }
+  ],
+  "output": [
+    {
+      "type": "text",
+      "action": "output",
+      "args": {
+        "outputDir": "./premerge"
+      }
+    }
+  ]
+}
