@@ -67,7 +67,7 @@ jobs:
       - name: Convert sing-box geoip.db
         run: |
           cd ./output/dat || exit 1
-          go install -v github.com/MetaCubeX/geo@latest
+          go install -v github.com/metacubex/geo@latest
           $(go env GOPATH)/bin/geo convert -i v2ray -o sing -f v2ray-country-only-cn-private.dat sing-country-only-cn-private.dat
           
 
