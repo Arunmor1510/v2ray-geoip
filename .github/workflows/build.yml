@@ -51,7 +51,7 @@ jobs:
           go install -v github.com/zhanhb/cidr-merger@latest
           for name in $(ls *.txt); do
             newname=`echo -n ${name} | sed -e 's/ //g'`
-            $(go env GOPATH)/bin/cidr-merger -o postmerge/${newname} ${name}
+            $(go env GOPATH)/bin/cidr-merger -o ../postmerge/${newname} ${name}
           done
 
       - name: Build geoip files
